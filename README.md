@@ -13,7 +13,14 @@ Some reasons off-the-shelf log shippers might not work with this API:
 
 Logstash ninjas might be able to work around these natively, but I couldn't, hence this script.
 
-The script demonstrates one way to consume the paginated API, stream to stdout and POST to logstash. The corresponding logstash pipeline config looks like this:
+The script demonstrates one way to consume the paginated API, stream to stdout and POST to logstash.
+
+## Usage
+
+To run the script, set `TFC_ORG_TOKEN` environment variable to be an org token for your TFC organization, then run the script: `python3 tfc_get_logs.py`. The script will pull all existing events from the API, then pull only new events every 60 seconds. Currently events will be output on stdout, and also HTTP POSTed to a logstash HTTP listener on localhost port 50000.
+
+The corresponding logstash pipeline config looks like this:
+
 ```
 input {
   http {

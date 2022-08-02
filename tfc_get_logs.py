@@ -2,7 +2,7 @@ import os
 import requests
 import time
 
-POLL_INTERVAL = 10  # seconds to wait between API calls
+POLL_INTERVAL = 60  # seconds to wait between API calls
 PAGESIZE = None     # number of events to fetch with each call (None = default)
 TFC_ORG_TOKEN = os.environ.get('TFC_ORG_TOKEN')
 AUDIT_TRAIL_URL = "https://app.terraform.io/api/v2/organization/audit-trail"
