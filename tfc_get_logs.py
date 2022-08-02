@@ -15,8 +15,8 @@ def get_events(URL, headers, params, page=1):
        Handle pagination through recursion.
        JSON payload should contain 'events' and 'pagination' at the top level.
     """
-    url_params['page'] = None if page == 1 else page
-    r = requests.get(URL, headers=headers, params=url_params)
+    params['page'] = None if page == 1 else page
+    r = requests.get(URL, headers=headers, params=params)
     r.raise_for_status()
     json_response = r.json()
     events = json_response['data']
