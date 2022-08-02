@@ -7,7 +7,8 @@ PAGESIZE = None     # number of events to fetch with each call (None = default)
 TFC_ORG_TOKEN = os.environ.get('TFC_ORG_TOKEN')
 AUDIT_TRAIL_URL = "https://app.terraform.io/api/v2/organization/audit-trail"
 
-headers = { "Authorization": f"Bearer {TFC_ORG_TOKEN}"}
+tfc_headers = { "Authorization": f"Bearer {TFC_ORG_TOKEN}"}
+logstash_headers = { 'content-type': 'application/json'}
 url_params = {'since': None, 'page[size]': PAGESIZE}
 
 def get_events(URL, headers, params, page=1):
@@ -27,12 +28,12 @@ def get_events(URL, headers, params, page=1):
 
 # Main loop
 while True:
-    events = get_events(AUDIT_TRAIL_URL, headers=headers, params=url_params)
+    events = get_events(AUDIT_TRAIL_URL, headers=tfc_headers, params=url_params)
 
     if events:
         url_params['since'] = events[0]['timestamp']
         for event in events:
             print(event)
+            rp = requests.post('http://localhost:50000', json=event, headers=logstash_headers)
 
     time.sleep(POLL_INTERVAL)
-
