@@ -1,4 +1,4 @@
-# Consuming Terraform Cloud Audit Train API
+# Consuming Terraform Cloud Audit Trail API
 
 This is a proof of concept log shipper to demonstrate the principles required to consume the TFC Audit Trail API. It is a work in progress and not suitable for production!
 
