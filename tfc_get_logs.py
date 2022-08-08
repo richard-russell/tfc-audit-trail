@@ -5,6 +5,7 @@ import time
 POLL_INTERVAL = 60  # seconds to wait between API calls
 PAGESIZE = None     # number of events to fetch with each call (None = default)
 TFC_ORG_TOKEN = os.environ.get('TFC_ORG_TOKEN')
+TFC_LOG_SINK = os.environ.get('TFC_LOG_SINK')
 AUDIT_TRAIL_URL = "https://app.terraform.io/api/v2/organization/audit-trail"
 
 tfc_headers = { "Authorization": f"Bearer {TFC_ORG_TOKEN}"}
@@ -34,6 +35,7 @@ while True:
         url_params['since'] = events[0]['timestamp']
         for event in events:
             print(event)
-            rp = requests.post('http://localhost:50000', json=event, headers=logstash_headers)
+            if TFC_LOG_SINK:
+                rp = requests.post(TFC_LOG_SINK, json=event, headers=logstash_headers)
 
     time.sleep(POLL_INTERVAL)

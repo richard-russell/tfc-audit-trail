@@ -17,7 +17,10 @@ The script demonstrates one way to consume the paginated API, stream to stdout a
 
 ## Usage
 
-To run the script, set `TFC_ORG_TOKEN` environment variable to be an org token for your TFC organization, then run the script: `python3 tfc_get_logs.py`. The script will pull all existing events from the API, then pull only new events every 60 seconds. Currently events will be output on stdout, and also HTTP POSTed to a logstash HTTP listener on localhost port 50000.
+To run the script, set the following environment variables:
+- `TFC_ORG_TOKEN` environment variable to be an org token for your TFC organization
+- `TFC_LOG_SINK` the URL of a logstash instance (or any URL that logs can be HTTP POSTed to), e.g. `http://localhost:50000`
+Run the script: `python3 tfc_get_logs.py`. The script will pull all existing events from the API, then pull only new events every 60 seconds. Events will be output on stdout, and also HTTP POSTed to the TCP_LOG_SINK URL if defined.
 
 The corresponding logstash pipeline config looks like this:
 
